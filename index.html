@@ -257,10 +257,10 @@
 </header>
 
 <div class="container">
-  <form class="add-form" id="add-form">
+  <div class="add-form">
     <input type="text" id="task-input" placeholder="タスク名を入力…" autocomplete="off" maxlength="100" />
-    <button type="submit">追加</button>
-  </form>
+    <button type="button" id="add-btn">追加</button>
+  </div>
 
   <div class="filters" id="filters">
     <button class="filter-btn active" data-filter="全て">全て</button>
@@ -340,9 +340,7 @@
     return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
-  // イベント: タスク追加
-  document.getElementById('add-form').addEventListener('submit', e => {
-    e.preventDefault();
+  function addTask() {
     const input = document.getElementById('task-input');
     const name = input.value.trim();
     if (!name) return;
@@ -351,6 +349,11 @@
     render();
     input.value = '';
     input.focus();
+  }
+
+  document.getElementById('add-btn').addEventListener('click', addTask);
+  document.getElementById('task-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') addTask();
   });
 
   // イベント: リスト操作（cycle / delete）
